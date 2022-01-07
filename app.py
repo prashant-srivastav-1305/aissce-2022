@@ -1,3 +1,12 @@
+"""
+Remaining tasks:
+1. Searching patient
+2. Update patient
+2.1 / 2.2 : Admit/Discharge
+3. Show all
+"""
+
+
 from tkinter import *
 from tkinter import messagebox
 from tkinter import scrolledtext
