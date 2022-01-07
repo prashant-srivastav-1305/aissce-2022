@@ -13,7 +13,7 @@ Login backend (login_screen.py)
 
 
 def login(username, password):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='<enter>', user='<enter>', password='<enter>')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(f"SELECT * FROM usernames WHERE username='{username}' AND psswd='{password}';")
@@ -30,7 +30,7 @@ Data entry backend (app.py)
 
 # Adding a patient
 def addPatient(name,name2, age, sex, diagnosis, doctor, status, days=0):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='<enter>', user='<enter>', password='<enter>')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -54,7 +54,7 @@ def addPatient(name,name2, age, sex, diagnosis, doctor, status, days=0):
 
 # Searching a patient
 def getInfo(name="", age="", sex="", diagnosis="", doctor="", status="", days=""):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='<enter>', user='<enter>', password='<enter>')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
