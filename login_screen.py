@@ -30,12 +30,12 @@ window.title('Alpha Healthcare Login')
 window.configure(bg='teal')
 window.resizable(False, False)
 window.config(padx=10)
-icon = PhotoImage(file='alpha.png')
+icon = PhotoImage(file='photos/alpha.png')
 window.iconphoto(False, icon)
 
 
 # Image
-img = PhotoImage(file='main_logo.png')
+img = PhotoImage(file='photos/main_logo.png')
 img_button = Button(window, image=img)
 img_button.grid(row=0,
                 column=0,
