@@ -12,7 +12,7 @@ Login backend (login_screen.py)
 
 
 def login(username, password):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='?', user='?', password='?')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(f"SELECT * FROM usernames WHERE username='{username}' AND psswd='{password}';")
@@ -29,7 +29,7 @@ Data entry backend (app.py)
 
 # Adding a patient
 def addPatient(name, name2, age, sex, diagnosis, doctor, status, days=1):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='?', user='?', password='?')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -53,7 +53,7 @@ def addPatient(name, name2, age, sex, diagnosis, doctor, status, days=1):
 
 # Searching a patient
 def getInfo(name="", name2="", age="", sex="", diagnosis="", doctor="", status="", days=""):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='?', user='?', password='?')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -75,7 +75,7 @@ def getInfo(name="", name2="", age="", sex="", diagnosis="", doctor="", status="
 # Searching for update
 def updatePatient_search(id):
     try:
-        db = sql.connect(host='localhost', user='root', password='password')
+        db = sql.connect(host='?', user='?', password='?')
         cursor = db.cursor()
         cursor.execute('USE alpha_healthcare')
         cursor.execute(
@@ -94,7 +94,7 @@ def updatePatient_search(id):
 
 # Update patient
 def updatePatient(id, name, name2, age, sex, diagnosis, doctor, status, days):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='?', user='?', password='?')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -118,7 +118,7 @@ def admit(name, name2, age, sex, diagnosis, doctor, days):
 
 # Showing all entries
 def showAll():
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='?', user='?', password='?')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute('SELECT * FROM patient_info')
