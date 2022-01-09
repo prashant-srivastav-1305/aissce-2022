@@ -1,6 +1,5 @@
 import mysql.connector as sql
 
-#
 # def username_connect():
 #     c = sql.connect(host='localhost', user='root', password='password')
 #     cursor = c.cursor()
@@ -13,7 +12,7 @@ Login backend (login_screen.py)
 
 
 def login(username, password):
-    db = sql.connect(host='<enter>', user='<enter>', password='<enter>')
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(f"SELECT * FROM usernames WHERE username='{username}' AND psswd='{password}';")
@@ -29,8 +28,8 @@ Data entry backend (app.py)
 
 
 # Adding a patient
-def addPatient(name,name2, age, sex, diagnosis, doctor, status, days=0):
-    db = sql.connect(host='<enter>', user='<enter>', password='<enter>')
+def addPatient(name, name2, age, sex, diagnosis, doctor, status, days=1):
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -53,20 +52,78 @@ def addPatient(name,name2, age, sex, diagnosis, doctor, status, days=0):
 
 
 # Searching a patient
-def getInfo(name="", age="", sex="", diagnosis="", doctor="", status="", days=""):
-    db = sql.connect(host='<enter>', user='<enter>', password='<enter>')
+def getInfo(name="", name2="", age="", sex="", diagnosis="", doctor="", status="", days=""):
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
-        f"SELECT * FROM patient_info WHERE name='{name}' "
-        f"OR age={age}"
+        f"SELECT * FROM patient_info WHERE f_name='{name}'"
+        f"OR l_name = '{name2}' "
+        f"OR age='{age}'"
         f"OR sex='{sex}'"
         f"OR diagnosis='{diagnosis}'"
         f"OR doctor='{doctor}'"
         f"OR status='{status}'"
-        f"OR days={days}"
+        f"OR days='{days}'"
     )
     row = cursor.fetchall()
     db.commit()
     db.close()
     return row
+
+
+# Searching for update
+def updatePatient_search(id):
+    try:
+        db = sql.connect(host='localhost', user='root', password='password')
+        cursor = db.cursor()
+        cursor.execute('USE alpha_healthcare')
+        cursor.execute(
+            f"SELECT * FROM patient_info WHERE id={id}"
+        )
+        row = cursor.fetchall()
+        db.commit()
+        db.close()
+        if len(row) == 1:
+            return True, row
+        else:
+            return False, False
+    except sql.errors.ProgrammingError:
+        return False, False
+
+
+# Update patient
+def updatePatient(id, name, name2, age, sex, diagnosis, doctor, status, days):
+    db = sql.connect(host='localhost', user='root', password='password')
+    cursor = db.cursor()
+    cursor.execute('USE alpha_healthcare')
+    cursor.execute(
+        f"UPDATE patient_info SET f_name='{name}',"
+        f"l_name = '{name2}',"
+        f"age = {age},"
+        f"sex = '{sex}',"
+        f"diagnosis = '{diagnosis}',"
+        f"doctor = '{doctor}',"
+        f"status = '{status}',"
+        f"days={days} WHERE id={id}"
+    )
+    db.commit()
+    db.close()
+
+
+# Admit patient
+def admit(name, name2, age, sex, diagnosis, doctor, days):
+    addPatient(name, name2, age, sex, diagnosis, doctor, status='Admit', days=days)
+
+
+# Showing all entries
+def showAll():
+    db = sql.connect(host='localhost', user='root', password='password')
+    cursor = db.cursor()
+    cursor.execute('USE alpha_healthcare')
+    cursor.execute('SELECT * FROM patient_info')
+    rows = cursor.fetchall()
+    main = []
+    for row in rows:
+        main.append(list(row))
+    return main
