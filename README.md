@@ -31,5 +31,3 @@ Updates:
 - admit() - showAll() - font updated for the whole program - GUI interface improved
 ```
 
-
-
