@@ -12,13 +12,24 @@ Modules used:
 ```
 
 ```
+Code files:
 login_screen.py : The initial login interface
 app.py : Main app
 backend.py : SQL activites happen here 
 ```
 
 ```
-Updates: 
-07.01.2022 - login screen added - main interface added - addPatient() command added 
+Image resources used:
+alpha.png : icon
+main_logo.png : logo to be displayed in login screen
 ```
+
+```
+Updates: 
+07.01.2022 - login screen added - main interface added - addPatient() command added
+09.01.2022 - login screen updated - main interface functions added - getInfo() - updatePatient() - updatePatient_search()
+- admit() - showAll() - font updated for the whole program - GUI interface improved
+```
+
+
 
