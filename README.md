@@ -19,6 +19,6 @@ backend.py : SQL activites happen here
 
 ```
 Updates: 
-07.01.2022- initial commit, login_screen.py finalised
+07.01.2022 - login screen added - main interface added - addPatient() command added 
 ```
 
