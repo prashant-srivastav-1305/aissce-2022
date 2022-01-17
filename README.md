@@ -36,8 +36,7 @@ font updated for the whole program - GUI interface improved
 ```
 
 ```Screenshots:``` <br>
-![Login screen](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshot%201.png)
-![Login screen](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshot%202.png)
+![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/SSes.png)
 
 ```
 Future:
