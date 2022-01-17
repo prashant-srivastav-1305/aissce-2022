@@ -4,15 +4,21 @@ import mysql.connector as sql
 #     c = sql.connect(host='localhost', user='root', password='password')
 #     cursor = c.cursor()
 
-"""
-Login backend (login_screen.py)
-1. Connect the MySQL database and retrieve data from usernames table for comparison
-2. Returns True if perfect match found, False otherwise
-"""
+
+# patient_info TABLE STRUCTURE 
+# id | f_name | l_name | age | sex | diagnosis | doctor | status | days
+# VARIABLES IN THIS FILE CORRESPONDING TO THE ABOVE HEADERS 
+# id | name | name2 | age | sex | diagnosis | doctor | status | days 
 
 
+#----------------------------------(login_screen.py) BACKEND------------------------------------------------------
+
+# LOGIN FUNCTION
+# PARAMETERS: username, password
+# CONNECT MySQL DATABASE AND RETRIEVE DATA FROM usernames TABLE FOR COMPARISON
+# RETURNS True IF PERFECT MATCH FOUND, False OTHERWISE 
 def login(username, password):
-    db = sql.connect(host='?', user='?', password='?')
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(f"SELECT * FROM usernames WHERE username='{username}' AND psswd='{password}';")
@@ -22,14 +28,14 @@ def login(username, password):
         return False
 
 
-"""
-Data entry backend (app.py)
-"""
+#-------------------------------------------(app.py) BACKEND--------------------------------------------------------
 
-
-# Adding a patient
+# ADDING A PATIENT
+# PARAMETERS: name, name2, age, sex, diagnosis, doctor, status, days (DEFAULT VALUE = 1)
+# CONNECT TO MySQL DATABASE AND CREATE THE patient_info TABLE IF IT DOES NOT EXIST
+# ADD THE GIVEN DATA TO THE TABLE AND COMMIT TO THE QUERIES 
 def addPatient(name, name2, age, sex, diagnosis, doctor, status, days=1):
-    db = sql.connect(host='?', user='?', password='?')
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -51,9 +57,14 @@ def addPatient(name, name2, age, sex, diagnosis, doctor, status, days=1):
     db.close()
 
 
-# Searching a patient
+# SEARCHING A PATIENT 
+# PARAMETERS: name, name2, age, sex, diagnosis, doctor, status, days
+# DEFAULT VALUE OF ALL PARAMETERS = "" SO THAT WE DON'T COME ACROSS AN ERROR WHEN ANY PARAMETER IS NOT GIVEN
+# CONNECT TO MySQL DATABASE AND SEARCH EVERY PARAMETER WITH THE HELP OF select ...from...where STATEMENTS
+# COMMIT TO THE QUERY, CLOSE THE DATABASE AND THEN RETURN THE DATA COLLECTED 
+# FUTURE PLANS: SELECTIVE SEARCHING OF INFORMATION
 def getInfo(name="", name2="", age="", sex="", diagnosis="", doctor="", status="", days=""):
-    db = sql.connect(host='?', user='?', password='?')
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -72,10 +83,17 @@ def getInfo(name="", name2="", age="", sex="", diagnosis="", doctor="", status="
     return row
 
 
-# Searching for update
+# SEARCHING A PATIENT THROUGH ITS id AND RETURN A TUPLE (bool, bool OR record_found)
+# PARAMETER: id 
+# CONNECT TO THE MySQL DATABASE AND THEN SEARCH WITH THE id USING select...from...where QUERY
+# FETCH ALL THE RECORDS FOUND AND SAVE TO THE row VARIABLE
+# IF RECORD PRESENT, len(row) == 1 AND FUNCTION RETURNS (True, row)
+# IF RECORD ABSENT, len(row) != 1 AND FUNCTION RETURNS (False, False)
+# THESE TUPLES ARE USED FOR FURTHER CHECKING IN THE FRONT-END (@ LINE 64, app.py)
+# ON THE FRONT-END, THIS FUNCTION IS FURTHER USED FOR UPDATING THE PATIENT 
 def updatePatient_search(id):
     try:
-        db = sql.connect(host='?', user='?', password='?')
+        db = sql.connect(host='localhost', user='root', password='password')
         cursor = db.cursor()
         cursor.execute('USE alpha_healthcare')
         cursor.execute(
@@ -92,9 +110,13 @@ def updatePatient_search(id):
         return False, False
 
 
-# Update patient
+# UPDATING A PATIENT
+# PARAMETERS: id, name, name2, age, sex, diagnosis, doctor, status, days
+# CONNECT TO THE MySQL DATABASE AND UPDATE THE RECORD USING update...set QUERY
+# COMMIT TO THE QUERY AND CLOSE THE DATABASE
+# None RETURNED
 def updatePatient(id, name, name2, age, sex, diagnosis, doctor, status, days):
-    db = sql.connect(host='?', user='?', password='?')
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -111,14 +133,21 @@ def updatePatient(id, name, name2, age, sex, diagnosis, doctor, status, days):
     db.close()
 
 
-# Admit patient
+# ADMITTING A PATIENT 
+# PARAMETERS: name, name2, age, sex, diagnosis, doctor, days
+# USE THE addPatient() FUNCTION WITH THE STATUS SET TO 'Admit'
 def admit(name, name2, age, sex, diagnosis, doctor, days):
     addPatient(name, name2, age, sex, diagnosis, doctor, status='Admit', days=days)
 
 
-# Showing all entries
+# SHOWING ALL ENTRIES 
+# PARAMETERS: NONE 
+# CONNECT TO THE MySQL DATABASE AND COLLECT ALL THE RECORDS INTO A VARIABLE rows
+# rows IS A LIST OF TUPLES
+# APPEND ALL THE RECORDS IN rows TO main WITH AN EXPLICIT CONVERSION OF THE TUPLES INTO LISTS
+# RETURN THE main LIST 
 def showAll():
-    db = sql.connect(host='?', user='?', password='?')
+    db = sql.connect(host='localhost', user='root', password='password')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute('SELECT * FROM patient_info')
@@ -127,3 +156,6 @@ def showAll():
     for row in rows:
         main.append(list(row))
     return main
+
+
+#---------------------------------END------------------------------------------------------
