@@ -27,9 +27,21 @@ main_logo.png : logo to be displayed in login screen
 ```
 Updates: 
 07.01.2022 - login screen added - main interface added - addPatient() command added
-09.01.2022 - login screen updated - main interface functions added - getInfo() - updatePatient() - updatePatient_search()
-- admit() - showAll() - font updated for the whole program - GUI interface improved
+
+09.01.2022 - login screen updated - main interface functions added - getInfo() - 
+updatePatient() - updatePatient_search() - admit() - showAll() - 
+font updated for the whole program - GUI interface improved
+
+17.01.2022 - added comments to [app.py] and [backend.py]
 ```
+
 ```Screenshots:``` <br>
 ![Login screen](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshot%201.png)
 ![Login screen](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshot%202.png)
+
+```
+Future:
+- Discharge patient 
+- Calculation of fees
+- No. of available wards
+```
