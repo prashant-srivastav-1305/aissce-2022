@@ -26,13 +26,16 @@ main_logo.png : logo to be displayed in login screen
 
 ```
 Updates: 
-07.01.2022 - login screen added - main interface added - addPatient() command added
+07.01.2022 == (0.1.0)
+- login screen added - main interface added - addPatient() command added 
 
-09.01.2022 - login screen updated - main interface functions added - getInfo() - 
+09.01.2022 == (0.2.0)
+- login screen updated - main interface functions added - getInfo() - 
 updatePatient() - updatePatient_search() - admit() - showAll() - 
 font updated for the whole program - GUI interface improved
 
-17.01.2022 - added comments to [app.py] and [backend.py]
+17.01.2022 == (0.2.1)
+- added comments to [app.py] and [backend.py]
 ```
 
 ```Screenshots:``` <br>
