@@ -36,6 +36,10 @@ font updated for the whole program - GUI interface improved
 
 17.01.2022 == (0.2.1)
 - added comments to [app.py] and [backend.py]
+
+22.01.2022 == (0.3.0)
+- selective searching added - a new window for selective search now 
+implemented - comments updated - diagnosis variable changed to ward 
 ```
 
 ```Screenshots:``` <br>
