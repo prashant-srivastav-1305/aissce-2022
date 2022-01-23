@@ -52,7 +52,7 @@ some quality of life changes
 ```Screenshots:``` <br>
 ![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-one.png)
 ![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-two.png)
-
+![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/sample-bill.png)
 ```
 Future:
 - No. of available wards
