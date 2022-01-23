@@ -16,7 +16,7 @@ def success():
 # ------------------------------------------COMMANDS---------------------------------------------------------------
 
 
-# ADDING A PATIENT (BUTTON b1 @ LINES 376-383)
+# ADDING A PATIENT (BUTTON b1 @ LINES 432-439)
 # USE FUNCTION bk.addPatient() WITH ALL THE PARAMETERS FROM THE ENTRIES ,RADIOBUTTONS AND DROP-DOWN LISTS
 # SHOW THE OUTPUT IN A TABULAR FORM WITH prettytable AND tkinter.scrolledtext
 # EXCEPTION HANDLING WHEN ALL THE REQUIRED FIELDS ARE NOT FILLED
@@ -37,16 +37,16 @@ def add_patient_command():
         messagebox.showwarning('Data entry error', 'You have not entered all data!')
 
 
-# SEARCHING A PATIENT (BUTTON b2 @ LINES 386-393)
+# SEARCHING A PATIENT (BUTTON b2 @ LINES 442-449)
 # MAKE A NEW WINDOW CALLED sub_window FOR SELECTIVE SEARCHING USING THE tkinter.Toplevel() FUNCTION 
 # USE THAT NEW WINDOW TO SEARCH AND THEN DISPLAY THE SEARCHED DATA IN THE MAIN WINDOW 
 def search_patient_window():
     sub_window = Toplevel(window)
 
-    # SEARCHING A PATIENT (BUTTON (local) b1 @ LINES 103-111)
+    # SEARCHING A PATIENT (BUTTON (local) b1 @ LINES 104-113)
     # USE FUNCTION bk.getInfo() WITH ALL THE PARAMETERS FROM ENTRY AND DROP-DOWN LIST
     # SHOW THE SEARCHED INFORMATION IN A TABULAR FORM IN THE MASTER WINDOW WITH prettytable AND tkinter.scrolledtext
-    def search_patient_command():
+    def search_patient_command(event = None):
         ans = bk.getInfo(param.get(), data.get())
         if len(ans) == 0:
             messagebox.showinfo('Not found', 'There are no records found with the above data.')
@@ -88,6 +88,7 @@ def search_patient_window():
     e1 = Entry(frame, textvariable=data)
     e1.grid(row=1, column=1)
     e1.configure(font=font)
+    e1.bind('<Return>', search_patient_command)
 
     # ===========================[DROPDOWN LIST]====================================
     # PARAMETERS TO SEARCH
@@ -107,13 +108,26 @@ def search_patient_window():
     b1.grid(row=2,
             column=0,
             columnspan=2,
-            sticky=N + E + W + S)
+            sticky=N + E + W + S,
+            pady=5)
     b1.configure(font=font)
+
+    # CLOSE BUTTON
+    b2 = Button(frame,
+                text='Close',
+                bg = 'red',
+                command= sub_window.destroy)
+    b2.grid(row=3,
+            column=0,
+            columnspan=2,
+            sticky= N+ E + W + S,
+            pady = 5)
+    b2.configure(font=font)
 
     sub_window.mainloop()
 
 
-# UPDATING A PATIENT (BUTTON b3 @ LINES 397-401)
+# UPDATING A PATIENT (BUTTON b3 @ LINES 453-457)
 # TAKE THE ID TO UPDATE USING tkinter.simpledialog AND STORING THE ID IN choice
 # USE THE FUNCTION bk.updatePatient_search() TO SEARCH FOR THE REQUIRED ID
 # IF PATIENT IS FOUND THEN ALL THE INFO IS SET INTO THE ENTRIES, WHICH THE USER CAN MODIFY
@@ -137,12 +151,15 @@ def update_patient_command():
         b3.config(state='disabled')
         b1.config(state='disabled')
         b2.config(state='disabled')
+        b31.config(state='disabled')
+        b32.config(state='disabled')
         b33.config(state='normal')
+        b33.configure(bg = 'green')
     else:
         messagebox.showwarning('ID not found', 'The ID you entered is not in the database!')
 
 
-# CONFIRM COMMAND (BUTTON b33 @ LINES 414-416)
+# CONFIRM COMMAND (BUTTON b33 @ LINES 470-473)
 # THIS COMMAND IS USED AFTER THE CONFIRM BUTTON IS ENABLED WHEN THE PATIENT RECORD IS FOUND IN THE DATABASE
 # AND THE ENTRIES ARE SET WITH THE INFO. THE USER NEEDS TO PRESS THIS BUTTON AFTER HE/SHE HAS MODIFIES THE INFORMATION
 # IT USES THE bk.updatePatient() COMMAND WITH ALL THE REQUIRED PARAMETERS TO UPDATE THE PATIENT
@@ -153,9 +170,12 @@ def confirm_command():
         days_to_admit.get()
     )
     b33.config(state='disabled')
+    b33.configure(bg = 'light grey')
     b1.config(state='normal')
     b2.config(state='normal')
     b3.config(state='normal')
+    b31.config(state='normal')
+    b32.config(state='normal')
     name.set('First name')
     name2.set('Last name')
     age.set('')
@@ -167,7 +187,7 @@ def confirm_command():
     show_all_command()
 
 
-# ADMIT A PATIENT (BUTTON b31 @ LINES 404-405)
+# ADMIT A PATIENT (BUTTON b31 @ LINES 460-461)
 # USE THE FUNCTION bk.admit() WITH ALL THE REQUIRED PARAMETERS TO ADMIT A PATIENT
 # EXCEPTION HANDLING IF ALL THE DATA IS NOT ENTERED
 # APPROPRIATE MESSAGE IS SHOWN USING tkinter.messagebox.showwarning()
@@ -181,13 +201,49 @@ def admit_command():
         messagebox.showwarning('Data entry error', 'You have not entered all data correctly!')
 
 
-# DISCHARGING A PATIENT (BUTTON b32 @ LINES 409-410)
-# WORK REMAINING.....
+# DISCHARGING A PATIENT (BUTTON b32 @ LINES 465-466)
+# USE THE FUNCTION bk.discharge() WITH ALL THE REQUIRED PARAMETERS TO ADMIT A PATIENT
+# THEN USE bk.billing() , prettytable and open() TO GENERATE A BILL AND WRITE IT INTO A TEXT FILE
+# THE TEXT FILE LOCATION IS SET TO BE IN ../bills
 def discharge_command():
-    return 1.2
+    global d_choice
+    d_choice = simpledialog.askinteger('Discharge/Bill', 'Enter patient\'s ID:')
+    dis = bk.discharge(d_choice)
+    if len(dis) == 0:
+        messagebox.showwarning('ID not found', 'The ID you entered is not in the database!')
+    else:
+        p_name = dis[0][1] + ' ' + dis[0][2]
+        p_ward = dis[0][5]
+        p_status = dis[0][7]
+        p_days = dis[0][8]
+        bill = bk.billing(p_ward, p_status, p_days)
+        table = pt.PrettyTable(['PATIENT NAME:', p_name])
+        table.title = 'ALPHA HEALTHCARE PVT. LTD. (INVOICE)'
+        table.align = 'l'
+        table.align[p_name] = 'c'
+        table.add_row(['PATIENT AGE:', dis[0][3]])
+        table.add_row(['PATIENT SEX:', dis[0][4]])
+        table.add_row(['WARD NAME:', p_ward])
+        table.add_row(['WARD CHARGES (per day):', bill[0]])
+        table.add_row(['WARD CHARGES (total):', bill[1]])
+        if bill[2] == 200:
+            table.add_row(['CHECKUP CHARGES', 200])
+        else:
+            table.add_row(['ADMIT CHARGES:', 1000])
+        table.add_row(['DOCTOR CHARGES:', 500])
+        table.add_row(['*GRAND TOTAL*', bill[3]])
+        file = open(fr"bills/{p_name+'.txt'}", 'w')
+        file.write(str(table))
+        st1.config(state='normal')
+        st1.delete('1.0', 'end')
+        st1.insert(1.0, table)
+        st1.config(state='disabled')
 
 
-# SHOWING ALL DATA (BUTTON b4 @ LINES 419-426)
+
+
+
+# SHOWING ALL DATA (BUTTON b4 @ LINES 476-483)
 # SHOW ALL DATA IN THE SCROLLEDTEXT WIDGET USING THE bk.showAll() FUNCTION
 # THE SCROLLEDTEXT WIDGET'S STATE IS DISABLED ONCE THE INFORMATION IS DISPLAYED
 # SO THAT NO ONE CAN MODIFY IT EXPLICITLY
@@ -203,7 +259,7 @@ def show_all_command():
         st1.config(state='disabled')
 
 
-# LOGOUT  (BUTTON b5 @ LINES 429-436)
+# LOGOUT  (BUTTON b5 @ LINES 486-493)
 # THE USER IS PROMPTED FOR A CHOICE USING tkinter.messagebox.askyesno()
 # IF THE USER SELECTS YES THE login_screen.py FILE IS RUN AND THE CURRENT WINDOW IS DESTROYED
 # ELSE NOTHING IS DONE AND THE USER REMAINS IN THE CURRENT WINDOW
@@ -406,7 +462,7 @@ b31.grid(row=1, column=2)
 
 # DISCHARGING A PATIENT
 # WORK REMANING ON THIS....
-b32 = Button(op_frame, text='Discharge patient', width=15)
+b32 = Button(op_frame, text='Discharge patient', width=15, command=discharge_command)
 b32.grid(row=1, column=3)
 
 # CONFIRM BUTTON
@@ -414,6 +470,7 @@ b32.grid(row=1, column=3)
 b33 = Button(op_frame, text='Confirm', width=15)
 b33.grid(row=0, column=3)
 b33.config(state='disabled', command=confirm_command)
+b33.configure(bg = 'light grey')
 
 # SHOW ALL ENTRIES
 b4 = Button(op_frame,
