@@ -85,7 +85,7 @@ def getInfo(param, value):
 # FETCH ALL THE RECORDS FOUND AND SAVE TO THE row VARIABLE
 # IF RECORD PRESENT, len(row) == 1 AND FUNCTION RETURNS (True, row)
 # IF RECORD ABSENT, len(row) != 1 AND FUNCTION RETURNS (False, False)
-# THESE TUPLES ARE USED FOR FURTHER CHECKING IN THE FRONT-END (@ LINE 127, app.py)
+# THESE TUPLES ARE USED FOR FURTHER CHECKING IN THE FRONT-END (@ LINE 141, app.py)
 # ON THE FRONT-END, THIS FUNCTION IS FURTHER USED FOR UPDATING THE PATIENT 
 def updatePatient_search(id):
     try:
@@ -136,7 +136,76 @@ def admit(name, name2, age, sex, ward, doctor, days):
     addPatient(name, name2, age, sex, ward, doctor, status='Admit', days=days)
 
 
-# SHOWING ALL ENTRIES 
+# DISCHARGING A PATIENT
+# PARAMETERS: id
+# CONNECT TO THE MySQL DATABASE AND CREATE A discharged_patient TABLE IF IT DOESN'T EXIST
+# INSERT INTO THE discharged_patient TABLE THE INFORMATION OF THE PATIENT WHO IS DISCHARGED BY FILTERING
+# THROUGH id USING insert into...select...from...where QUERY
+# UPDATE THE STATUS OF THE PATIENT TO 'Dschrgd' (DISCHARGED) IN THE patient_info TABLE USING update...set...where QUERY
+# RETURN THE INFO OF THE PATIENT DISCHARGED USING THE select...from...where QUERY
+# COMMIT TO THE QUERY AND CLOSE THE DATABASE
+def discharge(id):
+    db = sql.connect(host='localhost', user='root', password='password')
+    cursor = db.cursor()
+    cursor.execute('USE alpha_healthcare')
+    cursor.execute(f'CREATE TABLE IF NOT EXISTS discharged_patient('
+                   'id INTEGER,'
+                   'f_name VARCHAR(10),'
+                   'l_name VARCHAR(10), '
+                   'age INTEGER, '
+                   'sex VARCHAR(6), '
+                   'ward VARCHAR(10), '
+                   'doctor VARCHAR(15), '
+                   'p_status VARCHAR(7), '
+                   'days INTEGER,'
+                   'FOREIGN KEY(id) REFERENCES patient_info(id))')
+    cursor.execute(f"INSERT INTO discharged_patient(id, f_name, l_name, age, sex, ward, doctor, p_status, days) "
+                   f"SELECT id, f_name, l_name, age, sex, ward, doctor, status, days "
+                   f"FROM patient_info "
+                   f"WHERE id = {id}")
+    cursor.execute(f"UPDATE patient_info SET status = 'Dschrgd' WHERE id = {id}")
+    cursor.execute(f"SELECT * FROM discharged_patient WHERE id={id} ")
+    row = cursor.fetchall()
+    db.commit()
+    db.close()
+    return row
+
+
+# BILLING A PATIENT
+# PARAMETERS: ward, status, days
+# CONNECT TO THE MySQL DATABASE AND RETRIEVE THE FEES PER DAY USING THE select...from...where QUERY
+# CALCULATING THE TOTAL AMOUNT
+# RETURNING THE DIFFERENT FORMS OF AMOUNTS CALCULATED AND THE TOTAL AMOUNT IN A TUPLE
+# CHECKUP FEES == 200, ADMIT FEES == 1000, WARD FEES == AS PER TABLE AND DOCTOR FEES == 500
+# COMMIT TO THE QUERY AND CLOSE THE DATABASE
+def billing(ward, status, days):
+    try:
+        db = sql.connect(host='localhost', user='root', password='password')
+        cursor = db.cursor()
+        cursor.execute('USE alpha_healthcare')
+        cursor.execute(f"SELECT fees FROM ward_info WHERE ward= '{ward}'")
+        row = cursor.fetchall()
+        fees = row[0][0]
+        # WARD AMOUNT FEES
+        w_amt = fees * days
+        # STATUS AMOUNT FEES
+        s_amt = 0
+        fees *= days
+        if status == 'Admit':
+            fees += 1000
+            s_amt += 1000
+        elif status == 'Checkup':
+            fees += 200
+            s_amt += 200
+        db.commit()
+        db.close()
+        # WARD FEES, WARD AMOUNT TOTAL, STATUS AMOUNT TOTAL, TOTAL AMOUNT INCL DOCTOR FEES
+        return row[0][0], w_amt, s_amt, fees + 500
+    except sql.errors.ProgrammingError:
+        pass
+
+
+# SHOWING ALL ENTRIES
 # PARAMETERS: NONE 
 # CONNECT TO THE MySQL DATABASE AND COLLECT ALL THE RECORDS INTO A VARIABLE rows
 # rows IS A LIST OF TUPLES
