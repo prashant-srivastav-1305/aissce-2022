@@ -13,7 +13,7 @@ import mysql.connector as sql
 # CONNECT MySQL DATABASE AND RETRIEVE DATA FROM usernames TABLE FOR COMPARISON
 # RETURNS True IF PERFECT MATCH FOUND, False OTHERWISE 
 def login(username, password):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='localhost', user='root', password='')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(f"SELECT * FROM usernames WHERE username='{username}' AND psswd='{password}';")
@@ -30,7 +30,7 @@ def login(username, password):
 # CONNECT TO MySQL DATABASE AND CREATE THE patient_info TABLE IF IT DOES NOT EXIST
 # ADD THE GIVEN DATA TO THE TABLE AND COMMIT TO THE QUERIES 
 def addPatient(name, name2, age, sex, ward, doctor, status, days=1):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='localhost', user='root', password='')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -59,7 +59,7 @@ def addPatient(name, name2, age, sex, ward, doctor, status, days=1):
 # SELECTIVE SEARCHING HAS BEEN CARRIED OUT BY MAKING A NEW WINDOW USING TopLevel() FUNCTION
 def getInfo(param, value):
     try:
-        db = sql.connect(host='localhost', user='root', password='password')
+        db = sql.connect(host='localhost', user='root', password='')
         cursor = db.cursor()
         cursor.execute('USE alpha_healthcare')
         cursor.execute(
@@ -83,7 +83,7 @@ def getInfo(param, value):
 # ON THE FRONT-END, THIS FUNCTION IS FURTHER USED FOR UPDATING THE PATIENT 
 def updatePatient_search(id):
     try:
-        db = sql.connect(host='localhost', user='root', password='password')
+        db = sql.connect(host='localhost', user='root', password='')
         cursor = db.cursor()
         cursor.execute('USE alpha_healthcare')
         cursor.execute(
@@ -106,7 +106,7 @@ def updatePatient_search(id):
 # COMMIT TO THE QUERY AND CLOSE THE DATABASE
 # None RETURNED
 def updatePatient(id, name, name2, age, sex, ward, doctor, status, days):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='localhost', user='root', password='')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(
@@ -139,7 +139,7 @@ def admit(name, name2, age, sex, ward, doctor, days):
 # RETURN THE INFO OF THE PATIENT DISCHARGED USING THE select...from...where QUERY
 # COMMIT TO THE QUERY AND CLOSE THE DATABASE
 def discharge(id):
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='localhost', user='root', password='')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute(f'CREATE TABLE IF NOT EXISTS discharged_patient('
@@ -174,7 +174,7 @@ def discharge(id):
 # COMMIT TO THE QUERY AND CLOSE THE DATABASE
 def billing(ward, status, days):
     try:
-        db = sql.connect(host='localhost', user='root', password='password')
+        db = sql.connect(host='localhost', user='root', password='')
         cursor = db.cursor()
         cursor.execute('USE alpha_healthcare')
         cursor.execute(f"SELECT fees FROM ward_info WHERE ward= '{ward}'")
@@ -206,7 +206,7 @@ def billing(ward, status, days):
 # APPEND ALL THE RECORDS IN rows TO main WITH AN EXPLICIT CONVERSION OF THE TUPLES INTO LISTS
 # RETURN THE main LIST 
 def showAll():
-    db = sql.connect(host='localhost', user='root', password='password')
+    db = sql.connect(host='localhost', user='root', password='')
     cursor = db.cursor()
     cursor.execute('USE alpha_healthcare')
     cursor.execute('SELECT * FROM patient_info')
