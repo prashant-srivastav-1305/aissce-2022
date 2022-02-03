@@ -46,13 +46,19 @@ implemented - comments updated - diagnosis variable changed to ward
 billing() - comments updated - GUI improved - billing system implemented
 - the bill is now saved in a .txt file in the ../bills directory - also 
 some quality of life changes 
+
+03.02.2022 == (0.4.1)
+- removed unused code and unneccessary comments - added comments to 
+[login_screen.py] - tweaked the bill's structure and added days to it
+- also tweaked the login interface by adding a new statement
+
 *release 1.0.0 will be out soon after some more fixes and debugging*
 ```
 
 ```Screenshots:``` <br>
 ![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-one.png)
 ![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-two.png)
-![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/sample-bill.png)
+![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/sample-invoice.png)
 ```
 Future:
 - No. of available wards
