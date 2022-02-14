@@ -20,7 +20,7 @@ backend.py : SQL activites happen here
 
 ```
 Image resources used:
-alpha.png : icon
+icon.png : icon
 main_logo.png : logo to be displayed in login screen
 ```
 
@@ -59,10 +59,10 @@ code and also made it more readable - new tabular interface and scrollbar
 - icons changed for the whole application - error codes added - new bill design
 ```
 
-```Screenshots:``` <br>
-![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-one.png)
-![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-two.png)
-![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/sample-invoice.png)
+![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-1.png)
+![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-2.png)
+![Photos](https://github.com/prashant-srivastav-1305/aissce-2022/blob/main/screenshots/screenshots-3.png)
+
 ```
 Future:
 - No. of available wards
