@@ -7,7 +7,7 @@ All India Senior Secondary Certificate Examination - 2022
 ```
 Modules used:
 1. mysql-connector-python [SQL related operations]
-2. prettytable [Display of tables] 
+2. datetime [Displaying date & time on bill] 
 3. tkinter [Creating a GUI]
 ```
 
@@ -52,7 +52,11 @@ some quality of life changes
 [login_screen.py] - tweaked the bill's structure and added days to it
 - also tweaked the login interface by adding a new statement
 
-*release 1.0.0 will be out soon after some more fixes and debugging*
+14.02.2022 == (1.0.0)
+- first release - improved graphics and ui - fixed bug of discharge
+command having error when u close it among others - cleaned the 
+code and also made it more readable - new tabular interface and scrollbar
+- icons changed for the whole application - error codes added - new bill design
 ```
 
 ```Screenshots:``` <br>
@@ -62,6 +66,10 @@ some quality of life changes
 ```
 Future:
 - No. of available wards
+- Save the bill in pdf form at your desired location
+- Improve the bill design further
+- Add an about page
+- Add administrator functionality to the 'admin' account
 ```
 
 ```
