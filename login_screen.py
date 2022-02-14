@@ -1,6 +1,13 @@
+# ==================================={login_screen.py}============================================
 from tkinter import *
 from tkinter import messagebox
 import backend as bk
+# INCREASING DPI
+try:
+        from ctypes import windll
+        windll.shcore.SetProcessDpiAwareness(1)
+except:
+        pass
 
 # FONT TUPLES: 
 # 1) TYPE COURIER NEW, SIZE 12, WEIGHT BOLD
@@ -11,7 +18,7 @@ font2 = ('Consolas', 16, 'bold','underline')
 
 # ------------------------------------COMMANDS---------------------------------------------------
 
-# LOGIN COMMAND (BUTTON b1 @ LINES 92-103)
+# LOGIN COMMAND (BUTTON b1 @ LINES 97-108)
 # USE FUNCTION bk.login() WITH ALL THE PARAMETERS FROM THE ENTRIES
 # IF bk.login() RETURNS True THEN DESTROY THE LOGIN WINDOW AND OPEN THE MAIN APP
 # ELSE SHOW WARNING THAT THE USERNAME OR PASSWORD HAS A FAULT 
@@ -20,7 +27,6 @@ def login_command(event=None):
     if bk.login(username.get(), password.get()):
         window.destroy()
         import app
-        app.success()
     else:
         messagebox.showwarning(
             'Login error', 'The username or password is incorrect!'
@@ -33,8 +39,7 @@ window.title('Alpha Healthcare Login')
 window.configure(bg='teal')
 window.resizable(False, False)
 window.config(padx=10)
-icon = PhotoImage(file='photos/alpha.png')
-window.iconphoto(False, icon)
+window.iconbitmap(r"photos/icon.ico")
 
 
 # ===============================[IMAGES]========================================
