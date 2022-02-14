@@ -20,7 +20,7 @@ backend.py : SQL activites happen here
 
 ```
 Image resources used:
-icon.png : icon
+icon.ico : icon
 main_logo.png : logo to be displayed in login screen
 ```
 
